@@ -30,22 +30,26 @@ public final class AppDatabase_Impl extends AppDatabase {
 
   private volatile FlatDao _flatDao;
 
+  private volatile ExpenseDao _expenseDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(1) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(2) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `users` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `isAdmin` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `users` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `email` TEXT NOT NULL, `isAdmin` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `flats` (`key` INTEGER NOT NULL, `name` TEXT NOT NULL, `address` TEXT NOT NULL, `dueDay` INTEGER NOT NULL, `bkashNumber` TEXT NOT NULL, PRIMARY KEY(`key`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `expenses` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `amount` REAL NOT NULL, `category` TEXT NOT NULL, `description` TEXT NOT NULL, `date` INTEGER NOT NULL, `paidBy` INTEGER NOT NULL, `participants` TEXT NOT NULL, `createdBy` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '414a05ced4c6fbf0909f304e940f0505')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f5fba2ea685b84472767163643697a9')");
       }
 
       @Override
       public void dropAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS `users`");
         db.execSQL("DROP TABLE IF EXISTS `flats`");
+        db.execSQL("DROP TABLE IF EXISTS `expenses`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -89,10 +93,11 @@ public final class AppDatabase_Impl extends AppDatabase {
       @NonNull
       public RoomOpenHelper.ValidationResult onValidateSchema(
           @NonNull final SupportSQLiteDatabase db) {
-        final HashMap<String, TableInfo.Column> _columnsUsers = new HashMap<String, TableInfo.Column>(4);
+        final HashMap<String, TableInfo.Column> _columnsUsers = new HashMap<String, TableInfo.Column>(5);
         _columnsUsers.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsUsers.put("username", new TableInfo.Column("username", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsUsers.put("password", new TableInfo.Column("password", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUsers.put("email", new TableInfo.Column("email", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsUsers.put("isAdmin", new TableInfo.Column("isAdmin", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysUsers = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesUsers = new HashSet<TableInfo.Index>(0);
@@ -118,9 +123,28 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoFlats + "\n"
                   + " Found:\n" + _existingFlats);
         }
+        final HashMap<String, TableInfo.Column> _columnsExpenses = new HashMap<String, TableInfo.Column>(9);
+        _columnsExpenses.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExpenses.put("amount", new TableInfo.Column("amount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExpenses.put("category", new TableInfo.Column("category", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExpenses.put("description", new TableInfo.Column("description", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExpenses.put("date", new TableInfo.Column("date", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExpenses.put("paidBy", new TableInfo.Column("paidBy", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExpenses.put("participants", new TableInfo.Column("participants", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExpenses.put("createdBy", new TableInfo.Column("createdBy", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExpenses.put("createdAt", new TableInfo.Column("createdAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysExpenses = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesExpenses = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoExpenses = new TableInfo("expenses", _columnsExpenses, _foreignKeysExpenses, _indicesExpenses);
+        final TableInfo _existingExpenses = TableInfo.read(db, "expenses");
+        if (!_infoExpenses.equals(_existingExpenses)) {
+          return new RoomOpenHelper.ValidationResult(false, "expenses(com.rentmate.app.data.Expense).\n"
+                  + " Expected:\n" + _infoExpenses + "\n"
+                  + " Found:\n" + _existingExpenses);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "414a05ced4c6fbf0909f304e940f0505", "264042509c1f66f4f2d38150c6c5e517");
+    }, "9f5fba2ea685b84472767163643697a9", "7fae816c6296c4cd20169e654d85bf66");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -131,7 +155,7 @@ public final class AppDatabase_Impl extends AppDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "users","flats");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "users","flats","expenses");
   }
 
   @Override
@@ -142,6 +166,7 @@ public final class AppDatabase_Impl extends AppDatabase {
       super.beginTransaction();
       _db.execSQL("DELETE FROM `users`");
       _db.execSQL("DELETE FROM `flats`");
+      _db.execSQL("DELETE FROM `expenses`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -158,6 +183,7 @@ public final class AppDatabase_Impl extends AppDatabase {
     final HashMap<Class<?>, List<Class<?>>> _typeConvertersMap = new HashMap<Class<?>, List<Class<?>>>();
     _typeConvertersMap.put(UserDao.class, UserDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(FlatDao.class, FlatDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(ExpenseDao.class, ExpenseDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -200,6 +226,20 @@ public final class AppDatabase_Impl extends AppDatabase {
           _flatDao = new FlatDao_Impl(this);
         }
         return _flatDao;
+      }
+    }
+  }
+
+  @Override
+  public ExpenseDao expenseDao() {
+    if (_expenseDao != null) {
+      return _expenseDao;
+    } else {
+      synchronized(this) {
+        if(_expenseDao == null) {
+          _expenseDao = new ExpenseDao_Impl(this);
+        }
+        return _expenseDao;
       }
     }
   }

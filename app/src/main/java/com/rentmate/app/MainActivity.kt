@@ -13,6 +13,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -215,8 +220,8 @@ private fun MainApp(nav: NavHostController, db: AppDatabase, authVm: AuthViewMod
 private fun BottomNav(nav: NavHostController, currentRoute: String) {
 	NavigationBar(containerColor = Color(0xFF1E293B)) {
 		BottomNavItem(Icons.Default.Home, "Home", "home", currentRoute, nav)
-		BottomNavItem(Icons.Default.AccountBalanceWallet, "Expenses", "expenses", currentRoute, nav)
-		BottomNavItem(Icons.Default.Assessment, "Summary", "summary", currentRoute, nav)
+		BottomNavItem(Icons.Default.List, "Expenses", "expenses", currentRoute, nav)
+		BottomNavItem(Icons.Default.Info, "Summary", "summary", currentRoute, nav)
 		BottomNavItem(Icons.Default.Person, "Profile", "profile", currentRoute, nav)
 	}
 }
@@ -385,7 +390,7 @@ private fun ExpensesScreen(nav: NavHostController, db: AppDatabase, currentUser:
 							.fillMaxWidth(),
 						horizontalAlignment = Alignment.CenterHorizontally
 					) {
-						Icon(Icons.Default.Receipt, contentDescription = null, modifier = Modifier.size(64.dp))
+						Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(64.dp))
 						Spacer(Modifier.height(16.dp))
 						Text("No expenses yet", style = MaterialTheme.typography.titleMedium)
 						Spacer(Modifier.height(8.dp))
@@ -511,7 +516,7 @@ private fun AddExpenseScreen(db: AppDatabase, currentUser: User, nav: NavHostCon
 					Button(
 						onClick = {
 							saving = true
-							kotlinx.coroutines.GlobalScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+							GlobalScope.launch(Dispatchers.IO) {
 								val exp = Expense(
 									amount = amount.toDoubleOrNull() ?: 0.0,
 									category = category,
@@ -522,7 +527,7 @@ private fun AddExpenseScreen(db: AppDatabase, currentUser: User, nav: NavHostCon
 									createdBy = currentUser.id
 								)
 								db.expenseDao().insert(exp)
-								kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+								withContext(Dispatchers.Main) {
 									nav.popBackStack()
 								}
 							}
@@ -673,7 +678,7 @@ private fun ProfileScreen(authVm: AuthViewModel, currentUser: User) {
 				modifier = Modifier.fillMaxWidth(),
 				colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.7f))
 			) {
-				Icon(Icons.Default.Logout, contentDescription = null)
+				Icon(Icons.Default.ExitToApp, contentDescription = null)
 				Spacer(Modifier.width(8.dp))
 				Text("Logout")
 			}
@@ -749,7 +754,7 @@ private fun SettingsScreen(viewModel: SettingsViewModel, nav: NavHostController)
 							style = MaterialTheme.typography.bodySmall
 						)
 						LaunchedEffect(saveMessage) {
-							kotlinx.coroutines.delay(3000)
+							delay(3000)
 							viewModel.clearMessage()
 						}
 					}
