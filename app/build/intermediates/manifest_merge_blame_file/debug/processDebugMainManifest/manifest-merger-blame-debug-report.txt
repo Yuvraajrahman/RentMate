@@ -278,17 +278,17 @@
 148        </receiver>
 149
 150        <activity
-150-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\f41d617ea7e145b95e525ba9558c0f99\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:23:9-25:39
-151            android:name="androidx.activity.ComponentActivity"
-151-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\f41d617ea7e145b95e525ba9558c0f99\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:24:13-63
+150-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\13d0fc4566d99e7ff35cf3cd37da5c03\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+151            android:name="androidx.compose.ui.tooling.PreviewActivity"
+151-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\13d0fc4566d99e7ff35cf3cd37da5c03\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
 152            android:exported="true" />
-152-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\f41d617ea7e145b95e525ba9558c0f99\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:25:13-36
+152-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\13d0fc4566d99e7ff35cf3cd37da5c03\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
 153        <activity
-153-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\13d0fc4566d99e7ff35cf3cd37da5c03\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
-154            android:name="androidx.compose.ui.tooling.PreviewActivity"
-154-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\13d0fc4566d99e7ff35cf3cd37da5c03\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+153-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\f41d617ea7e145b95e525ba9558c0f99\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:23:9-25:39
+154            android:name="androidx.activity.ComponentActivity"
+154-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\f41d617ea7e145b95e525ba9558c0f99\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:24:13-63
 155            android:exported="true" />
-155-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\13d0fc4566d99e7ff35cf3cd37da5c03\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+155-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\f41d617ea7e145b95e525ba9558c0f99\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:25:13-36
 156
 157        <service
 157-->[androidx.room:room-runtime:2.6.1] C:\Users\yoyoy\.gradle\caches\9.0-milestone-1\transforms\44700278d89e5139bbfe1289b36b8505\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63

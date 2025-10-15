@@ -1,8 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "com.rentmate.app-mergeDebugResources-60:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.rentmate.app-mergeDebugResources-72:/values-watch-v20/values-watch-v20.xml",
             "map": [
+                {
+                    "source": "C:\\Users\\yoyoy\\.gradle\\caches\\9.0-milestone-1\\transforms\\cdc3b016bdc5fed000573eada42251e6\\transformed\\appcompat-1.6.1\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "from": {
+                        "startLines": "2,5,8",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,214,385",
+                        "endLines": "4,7,10",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "209,380,553"
+                    },
+                    "to": {
+                        "startLines": "10,13,16",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "634,793,964",
+                        "endLines": "12,15,18",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "788,959,1132"
+                    }
+                },
                 {
                     "source": "C:\\Users\\yoyoy\\.gradle\\caches\\9.0-milestone-1\\transforms\\c8e7aa164ae4c4b840cb8c005001c3cd\\transformed\\core-splashscreen-1.0.1\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {

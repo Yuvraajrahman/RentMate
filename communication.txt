@@ -1,3 +1,15 @@
 === 2025-10-15 ===
 User: Go with the plan, make the app, finish feature 1 and 2 first, login Admin/Admin, provide Windows/Android Studio run instructions.
 Assistant: Created Android project scaffold with Compose + Room. Implemented Feature 1 (local Admin/Admin login) and Feature 2 (Flat profile settings). Added glass-style UI, Gradle and manifest files, and this communication log.
+
+=== 2025-10-15 (Update 2) ===
+User: Create 3 users (Bokhtiar, Emon, Mahir) and implement features sequentially with glassmorphism UI. All users use same device (login/logout flow). Make features navigable and user-friendly.
+Assistant: Implemented major features:
+- Seeded database with Admin + 3 roommates (Emon, Bokhtiar, Mahir) with emails and passwords
+- Created Expense entity and DAO with full CRUD operations
+- Built comprehensive navigation structure with bottom nav bar
+- Implemented screens: Home (dashboard), Expenses (list), Add Expense (with category and participant selection), Monthly Summary (per-user breakdown), Profile (with logout), Settings (admin only)
+- Added expense calculation logic with split support among selected participants
+- Improved AuthViewModel to track current user and support logout
+- Consistent glassmorphism UI throughout with cards, gradients, and smooth animations
+Files modified: Entities.kt, AuthViewModel.kt, SettingsViewModel.kt, MainActivity.kt (complete rewrite with 8 screens)

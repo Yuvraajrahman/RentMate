@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.rentmate.app-mergeDebugResources-60:/values-v27/values-v27.xml",
+            "outputFile": "com.rentmate.app-mergeDebugResources-72:/values-v27/values-v27.xml",
             "map": [
                 {
                     "source": "C:\\Users\\yoyoy\\.gradle\\caches\\9.0-milestone-1\\transforms\\c8e7aa164ae4c4b840cb8c005001c3cd\\transformed\\core-splashscreen-1.0.1\\res\\values-v27\\values-v27.xml",
