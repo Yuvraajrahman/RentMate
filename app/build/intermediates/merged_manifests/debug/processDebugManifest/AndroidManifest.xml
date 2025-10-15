@@ -25,6 +25,7 @@
         android:debuggable="true"
         android:extractNativeLibs="false"
         android:label="RentMate"
+        android:testOnly="true"
         android:theme="@style/Theme.RentMate" >
         <activity
             android:name="com.rentmate.app.MainActivity"
