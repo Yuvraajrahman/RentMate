@@ -1,0 +1,4 @@
+-dontobfuscate
+-keep class androidx.room.** { *; }
+-keep class kotlinx.** { *; }
+-dontwarn org.jetbrains.annotations.**

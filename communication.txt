@@ -1,0 +1,3 @@
+=== 2025-10-15 ===
+User: Go with the plan, make the app, finish feature 1 and 2 first, login Admin/Admin, provide Windows/Android Studio run instructions.
+Assistant: Created Android project scaffold with Compose + Room. Implemented Feature 1 (local Admin/Admin login) and Feature 2 (Flat profile settings). Added glass-style UI, Gradle and manifest files, and this communication log.

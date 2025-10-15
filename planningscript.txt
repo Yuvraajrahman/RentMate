@@ -1,0 +1,288 @@
+this is my sheep to keep track of my expenses of my flat and my roommates who stay with me. every month i send them the amount they and i have to pay at the end of the month to the tenet. that includes rents, utility costs as mentioned and extra expenses we spend individually for everyone when needed which is added to the final amount that needed to be paid. 
+
+now i want to build a simple android app project not advanced since i want to learn and im new to adroid app development, that can take input from the admin, and the users, 
+process all the costs and expenses and at the end of the month an automated email is sent to the users address about how much they should pay at for the currently running month ex: 10th OCT and the automated text should be sent by 10th oct. all the ulitity of a running month should be generated for the running month. expenses will be added throughout the  30 days of a month ex: if the current month is oct then expenses will be counted from (10september-10oct), same for meals calculation. i will share more details about meals calculation, for the time being keep it as an option we will discuss that feature later. 
+
+there will be a bkash send money gateway option if possible, admin bkash sendmony number is 01957631102
+
+i want to build this project so my roomates can install the app in thier android phones and run it. and so i can learn about adroid app development
+at a basic level as i want to add in my CS intern cv that i have basic level experience in developing android app, so dont 
+add too advanced unneccesary stuff here, the app should be installable and publishable in any popular free website and if possible google playstore too
+
+i want to add ios liquid glass style UI for this app, smooth animations and tranparencies. 
+
+add another communicaiton.txt file to this project that will contain all the communicaiton between you and me. which promts i used to make 
+a features and update, basically everypromt i give and every changes you make to this project to each file that shoudl be stored in the file sequencially 
+after giving each prompt or message in the chat
+
+if the cloud storage is not synicng, the app will use local storage and will update or sync to cloud when its connected again. for the time being
+make all the features to be fuctional for local phone storage of the admin account, all the data will be stored to the admins phone, when 
+an user updates any data the requst will be sent to the admin, if he acepets it the data will be stored and updated for all the users, 
+if regected, that request will show denied to the user. untill anythign is accepted or regected by the admin, it will stay pending to the 
+users end. 
+add full cound solution later.  
+
+also give me step by step instructions how to open this app in android studio and run and check how the app is woking since im new to this.
+
+
+
+
+
+
+
+
+
+1. A focused list of **20 features** (each with a short explanation, implementation notes, and difficulty level).
+2. How to include the **communication.txt** file and what to store there.
+3. **Step-by-step instructions** to open, run and test the app in Android Studio (suitable for a beginner).
+4. A short recommended **tech stack** & project layout that keeps things simple while still looking modern (liquid-glass UI using Jetpack Compose).
+
+I kept the app deliberately simple so you can learn Android basics, make it publishable, and add it to your CV.
+
+# 1 — 20 suggested features (simple → a bit more involved)
+
+Each feature lists: what it does, why it’s useful, and a short implementation hint + difficulty (Basic / Intermediate).
+
+1. **User accounts (Admin + Roommates)**
+
+   * Let admin and roommates register/login (local accounts).
+   * Useful to distinguish who can add expenses vs who only views them.
+   * Store users in local Room DB; simple username + email.
+   * Difficulty: Basic.
+
+2. **Flat profile / Group settings**
+
+   * Admin creates a “flat” with name, address, tenant due date (10th), and bkash number (show only).
+   * Central place for rent split rules.
+   * Basic settings screen saved in Room/SharedPreferences.
+   * Difficulty: Basic.
+
+3. **Add/edit/delete expense items**
+
+   * Admin (and optionally users) can add expenses: amount, date, category (rent/utilities/extra), payer (who paid), note, and which roommates are involved.
+   * Core functionality.
+   * Use simple form UI + Room DB.
+   * Difficulty: Basic.
+
+4. **Per-user share calculation (split)**
+
+   * Calculate each person’s share automatically based on who should pay for that expense.
+   * E.g., utilities split equally, extras assigned to individuals.
+   * Implement logic in Kotlin; show breakdown list.
+   * Difficulty: Basic → Intermediate.
+
+5. **Custom billing period (10th→10th)**
+
+   * Support custom running month window (10th to 10th). App uses this when generating monthly totals.
+   * Add a setting to set billing start day.
+   * Difficulty: Basic.
+
+6. **Monthly summary screen (running month)**
+
+   * Shows totals for current billing window per user and breakdown by category (rent, utilities, extras).
+   * Use RecyclerView / Compose LazyColumn to show user rows.
+   * Difficulty: Basic.
+
+7. **Automated email generation (scheduled on 10th)**
+
+   * On the billing due date (10th) app prepares and sends an email to each roommate with their amount and breakdown.
+   * Implementation notes: mobile apps cannot reliably send emails silently without a backend or SMTP credentials. Options:
+
+     * Simpler: Use an **email Intent** to prefill email for each user (user taps “Send”); works but not fully automated.
+     * Better: Use a small backend or serverless function (Firebase Cloud Function + SendGrid / Mailgun) to send automated emails. Store roommate emails in app and trigger scheduled upload to the backend.
+   * Difficulty: Intermediate (fully automated requires simple backend). If you prefer no backend, implement Intent fallback.
+   * I will include instructions for both approaches below.
+
+8. **Scheduled background job (WorkManager)**
+
+   * Use Android WorkManager to schedule the monthly job (10th) that prepares emails / notifications.
+   * It’s reliable across reboots and Doze modes.
+   * Difficulty: Intermediate.
+
+9. **Push / Local notifications**
+
+   * Notify users when a new monthly bill is ready (and when an expense is added).
+   * Use local notifications for simplicity; push requires Firebase Cloud Messaging.
+   * Difficulty: Basic.
+
+10. **Payment link / bkash quick action**
+
+    * Show admin bkash number (01957631102) and a button that opens bkash / dialer or copies number to clipboard. Optionally add a QR code screen for bkash (if you want later).
+    * Difficulty: Basic.
+
+11. **Add “extras” owed by individuals**
+
+    * Admin or users can add expenses charged to specific people (e.g., groceries for A). These only affect the assigned people.
+    * Difficulty: Basic.
+
+12. **Meal tracking stub (toggle on/off)**
+
+    * Placeholder for meal calculation — enable later. For now, allow enabling “meals tracking” mode in settings.
+    * Difficulty: Basic.
+
+13. **Edit history / Audit log**
+
+    * Small log of who added or changed an expense (user + timestamp). Helpful for disputes.
+    * Store in Room as simple entries.
+    * Difficulty: Basic.
+
+14. **Export monthly summary (PDF/CSV)**
+
+    * Export the summary for the billing month as CSV or simple PDF to share outside app. Useful for records.
+    * Use CSV (very simple) or Android’s Print API to create a PDF.
+    * Difficulty: Intermediate (PDF a bit more work).
+
+15. **Per-user balances / running ledger**
+
+    * Show overall balance per user across months (credit/debit running total).
+    * Useful to track who owes what historically.
+    * Difficulty: Intermediate.
+
+16. **Settings & preferences (currency, billing start day)**
+
+    * Let admin set currency (BDT), billing day (10th), invoice email subject template, and toggle automatic email vs manual.
+    * Difficulty: Basic.
+
+17. **Simple authentication lock (PIN)**
+
+    * Add a 4-digit app PIN to protect sensitive screens (admin actions).
+    * Difficulty: Basic.
+
+18. **Onboarding + tutorial screens**
+
+    * Short screens that explain how billing window works (10th→10th) and how to add expenses. Good for a new user.
+    * Difficulty: Basic.
+
+19. **Sync/backup to cloud (optional — Firebase)**
+
+    * If you want roommates to have shared live data, add Firebase Realtime DB / Firestore sync. For a learning project, this can be optional.
+    * Difficulty: Intermediate → Advanced (but optional).
+
+20. **Theme + Liquid glass UI + smooth animations**
+
+    * Use Jetpack Compose with translucent cards, background blur (glassmorphism), rounded corners and micro animations for state changes. Keep it subtle so it’s not complex, but visually modern.
+    * Difficulty: Intermediate (UI polish takes time).
+
+---
+
+# 2 — Minimal recommended tech stack (keeps it beginner-friendly)
+
+* Language: **Kotlin**.
+* UI: **Jetpack Compose** (simpler to make modern UI and animations).
+* Local DB: **Room** (persist users, expenses, settings).
+* Background scheduling: **WorkManager** (for monthly jobs).
+* Email sending: **Option A (no backend):** use `ACTION_SENDTO` email Intent (prefilled emails). **Option B (automated):** small backend (Firebase Cloud Functions + SendGrid) — I recommend this if you want truly automated sending.
+* Optional cloud: **Firebase (Auth, Firestore, Functions)** if you later want sync or automated emails via server.
+* Build: Android Studio (Arctic Fox / Chipmunk / Dolphin or newer). Target SDK recent but keep minSdk ~21+ to cover many phones.
+
+---
+
+# 3 — communication.txt file (what to store & how)
+
+Create `communication.txt` in the project root. Every time you give a prompt or I send a change, append a new entry with date/time and the message. Use this simple format (append, sequential):
+
+```
+=== 2025-10-15 19:20:00 ===
+User: can you suggest 20 features for this android app? ...
+Assistant: (summary of features suggested, any files created)
+
+=== 2025-10-16 09:00:12 ===
+User: I want to change billing day to 5th...
+Assistant: Updated settings: billing day = 5th; file modified: src/...
+```
+
+Implementation notes:
+
+* When you commit project files, also commit `communication.txt` so you have the full conversation history bundled with the code.
+* Don’t include secret data (API keys) in this file.
+
+I will include this file in the project and add entries for every prompt/response in our future chat as you requested.
+
+---
+
+# 4 — Project structure (simple, one-module)
+
+```
+/RoomBillApp/
+  /app/
+    /src/main/java/com/you/roombill/...
+      MainActivity.kt
+      ui/  (composable screens)
+      data/ (Room entities, DAOs, repository)
+      model/ (Expense, User, Flat)
+      workers/ (WorkManager workers)
+      util/ (email builders, date utils)
+    /res/
+  communication.txt
+  README.md
+```
+
+---
+
+# 5 — Step-by-step: open, run & test in Android Studio (for a beginner)
+
+Follow these steps after I give you the starter project files (or you create a new project using this plan).
+
+**A. Install Android Studio**
+
+1. Download & install Android Studio from developer.android.com (use the latest stable).
+2. Install the Android SDK and at least one emulator system image (e.g., Pixel 3a API 31). Follow the installer prompts.
+
+**B. Get project into Android Studio**
+
+1. Put the project folder (`RoomBillApp/`) somewhere on your PC.
+2. Open Android Studio → **Open** → select the `RoomBillApp` folder (where `settings.gradle` / `build.gradle` are).
+3. Wait while Gradle syncs. Resolve any prompts (e.g., accept SDK updates). If a Kotlin or plugin update is asked, use recommended versions.
+
+**C. Run on emulator**
+
+1. In Android Studio toolbar, click AVD Manager → Create Virtual Device → choose a Pixel device → pick a recommended system image (API 30+). Create and start it.
+2. In the top toolbar, choose your app module and target the running emulator, then click **Run** (green play).
+3. App should install and open on the emulator. Watch Logcat if errors occur.
+
+**D. Run on a real Android phone**
+
+1. Enable Developer options on your phone (Settings → About → tap Build number 7 times), then enable USB Debugging.
+2. Connect phone by USB; accept debugging prompt. In Android Studio, pick your device and Run.
+3. To publish: generate a release build and sign it (Android Studio has wizard). You can distribute APK on free sites (e.g., GitHub Releases) or follow Play Store publish docs to publish (you’ll need a developer account).
+
+**E. Test main flows**
+
+1. Create Admin account, add roommates (with emails).
+2. Add expenses with various dates — verify the monthly summary reads from the configured billing window (10th→10th).
+3. Trigger the scheduled job manually (for testing) — in code, you can run an immediate WorkManager request or a debug button “Generate bill now” so you don’t have to wait until 10th. This helps testing.
+4. Test email sending:
+
+   * If using **Intent**: click “Send emails” -> system mail app opens with prefilled content. Verify recipients, subject, and body.
+   * If using **Backend**: test endpoint with Postman or a debug button that calls the function (you will need to deploy the function and have API key configured).
+
+**F. Building for release (short)**
+
+1. Build → Generate Signed Bundle/APK → follow wizard (create key store).
+2. Upload the bundle to Google Play Console (requires a dev account, one-time fee). For a simpler publish, upload the signed APK to GitHub Releases or other free hosting.
+
+---
+
+# 6 — Implementation tips & learning moments
+
+* **Keep UI minimal first.** Build functionality (Room, adding expenses, calculating) before spending time on fancy glass UI. Once core features work, polish the UI.
+* **Test edge cases:** expenses spanning months, rounding, deleted users.
+* **Billing window maths:** Use `java.time` (available on Android via desugaring) to compute periods robustly (10 Sep → 10 Oct).
+* **WorkManager** is the correct tool for scheduling monthly jobs. For testing, add a “Run now” debug button that calls the same worker logic.
+* **For email automation:** if you want fully automatic serverless emails, I can give you the minimal Firebase Cloud Function + SendGrid code next — that’s a small extra step but much nicer UX.
+
+---
+
+# 7 — Next steps I can provide immediately (pick any)
+
+* A starter skeleton project (Jetpack Compose + Room + WorkManager) with sample screens and local DB.
+* Minimal Compose UI showing a glassmorphism card and the monthly summary screen.
+* A step-by-step guide to implement automated emails via **Firebase Cloud Functions + SendGrid** (code included).
+* A sample `communication.txt` initial entry and a template README.
+
+Say which of the above you want me to create **right now** and I’ll produce it in this chat (I’ll also populate the first `communication.txt` entry for today). I won’t run anything for you — I’ll give the files/instructions you can copy into Android Studio.
+
+---
+
+
+
