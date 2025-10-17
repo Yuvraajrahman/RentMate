@@ -192,9 +192,9 @@ private fun MainApp(nav: NavHostController, db: AppDatabase, authVm: AuthViewMod
 	) { padding ->
 		Box(modifier = Modifier.padding(padding)) {
 			NavHost(navController = nav, startDestination = "home") {
-				composable("home") {
-					HomeScreen(nav, db, currentUser)
-				}
+                composable("home") {
+                    HomeScreen(nav, db, authVm, currentUser)
+                }
 				composable("expenses") {
 					ExpensesScreen(nav, db, currentUser)
 				}
@@ -248,7 +248,7 @@ private fun RowScope.BottomNavItem(
 }
 
 @Composable
-private fun HomeScreen(nav: NavHostController, db: AppDatabase, currentUser: User) {
+private fun HomeScreen(nav: NavHostController, db: AppDatabase, authVm: AuthViewModel, currentUser: User) {
 	var recentExpenses by remember { mutableStateOf<List<Expense>>(emptyList()) }
 
 	LaunchedEffect(Unit) {
@@ -256,7 +256,7 @@ private fun HomeScreen(nav: NavHostController, db: AppDatabase, currentUser: Use
 	}
 
 	GlassBackground {
-		Column(
+        Column(
 			modifier = Modifier
 				.fillMaxSize()
 				.padding(16.dp)
@@ -313,6 +313,21 @@ private fun HomeScreen(nav: NavHostController, db: AppDatabase, currentUser: Use
 					}
 				}
 			}
+
+            Spacer(Modifier.weight(1f))
+
+            Button(
+                onClick = { authVm.logout() },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White.copy(alpha = 0.15f),
+                    contentColor = Color.White
+                )
+            ) {
+                Icon(Icons.Default.ExitToApp, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text("Logout")
+            }
 		}
 	}
 }
